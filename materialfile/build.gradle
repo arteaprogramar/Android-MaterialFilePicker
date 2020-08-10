@@ -19,7 +19,7 @@ bintray {
     publications = ['release']
 
     pkg {
-        repo = 'Android-MaterialFilePicker'
+        repo = 'Android'
         name = 'arte.programar.materialfile'
         licenses = ["Apache-2.0"]
         vcsUrl = 'https://github.com/arteaprogramar/Android-MaterialFilePicker.git'
