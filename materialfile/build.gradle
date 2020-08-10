@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'arte.programar.materialfile'
+group = 'arte.programar'
 version = '1.0'
 
 // Use ./gradlew bintrayUpload to upload
@@ -19,22 +19,11 @@ bintray {
     publications = ['release']
 
     pkg {
-        repo = 'maven'
-        name = 'materialfilepicker'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
-
-        version {
-            name = project.version
-        }
-    }
-
-    pkg {
-        repo = 'Android-MaterialFilePicker' // YOUR REPOSITORY NAME FROM BINTRAY ACCOUNT
-        name = 'arte.programar.materialfile' //YOUR PACKAGE NAME FROM BINTRAY ACCOUNT
-        licenses = ["Apache-2.0"] // A LIST OF YOUR LICENCES
-        vcsUrl = 'https://github.com/arteaprogramar/Android-MaterialFilePicker.git' // YOUR GIT REPO
-        websiteUrl = 'https://github.com/arteaprogramar/Android-MaterialFilePicker' // YOUR SITE
+        repo = 'Android-MaterialFilePicker'
+        name = 'arte.programar.materialfile'
+        licenses = ["Apache-2.0"]
+        vcsUrl = 'https://github.com/arteaprogramar/Android-MaterialFilePicker.git'
+        websiteUrl = 'https://github.com/arteaprogramar/Android-MaterialFilePicker'
 
         version {
             name = project.version
@@ -85,22 +74,21 @@ afterEvaluate {
 
 android {
     compileSdkVersion 30
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 14
-        versionName "1.4"
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        versionCode 1
+        versionName "1.0"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
