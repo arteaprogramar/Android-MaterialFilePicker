@@ -13,9 +13,7 @@ Material file picker library for Android by Arte al Programar
 
 ## Add your project
 
-Download library and add it to your project
-
-or use `JitPack.io`
+Using Jcenter
 
 ```
 build.gradle (Project)
@@ -23,7 +21,6 @@ build.gradle (Project)
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
     }
 }
 
@@ -32,7 +29,7 @@ build.gradle (Module: app)
 
 dependencies {
     ...
-    implementation 'com.github.arteaprogramar:Android_MaterialFilePicker:version'
+    implementation 'arte.programar:materialfile:1.0'
 }
 
 
