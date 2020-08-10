@@ -38,7 +38,7 @@
 
         <fragment
             android:id="@+id/sample_fragment"
-            class="com.nbsp.materialfilepicker.sample.SampleFragment"
+            class="arte.programar.materialfile.sample.SampleFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
