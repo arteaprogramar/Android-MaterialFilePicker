@@ -1,70 +1,45 @@
 package arte.programar.materialfile.sample
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.core.content.ContextCompat.checkSelfPermission
 import arte.programar.materialfile.MaterialFilePicker
 import arte.programar.materialfile.ui.FilePickerActivity
 import com.nbsp.materialfilepicker.sample.R
 import java.io.File
 import java.util.regex.Pattern
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ActivityPermission() {
 
+    private val TAG: String = MainActivity::class.java.simpleName
     private val pickButton: Button by lazy { findViewById<Button>(R.id.pick_from_activity) }
+    private val PERMISSION_REQUEST = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        arrayOf(
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    } else {
+        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        pickButton.setOnClickListener { checkPermissionsAndOpenFilePicker() }
-    }
-
-    private fun checkPermissionsAndOpenFilePicker() {
-        val permissionGranted = checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED
-
-        if (permissionGranted) {
-            openFilePicker()
-        } else {
-            if (shouldShowRequestPermissionRationale(this, READ_EXTERNAL_STORAGE)) {
-                showError()
-            } else {
-                requestPermissions(
-                        this,
-                        arrayOf(READ_EXTERNAL_STORAGE),
-                        PERMISSIONS_REQUEST_CODE
-                )
-            }
-        }
-    }
-
-    private fun showError() {
-        Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults.first() == PERMISSION_GRANTED) {
-                openFilePicker()
-            } else {
-                showError()
-            }
+        pickButton.setOnClickListener {
+            requestAppPermissions(PERMISSION_REQUEST,  R.string.app_name, PERMISSIONS_REQUEST_CODE)
         }
     }
 
@@ -95,6 +70,14 @@ class MainActivity : AppCompatActivity() {
                 .start()
     }
 
+    override fun onPermissionsGranted(requestCode: Int) {
+        openFilePicker()
+    }
+
+    override fun onPermissionDenied(requestCode: Int) {
+        Log.d(TAG, "onPermissionDenied")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -111,8 +94,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val PERMISSIONS_REQUEST_CODE = 0
-        private const val FILE_PICKER_REQUEST_CODE = 1
+        private const val PERMISSIONS_REQUEST_CODE = 10000
+        private const val FILE_PICKER_REQUEST_CODE = 9999
 
         private const val ALARMS_EXTERNAL_STORAGE_FOLDER = "Alarms"
     }
