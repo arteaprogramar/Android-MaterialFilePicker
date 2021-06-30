@@ -15,7 +15,6 @@ import arte.programar.materialfile.filter.HiddenFilter;
 import arte.programar.materialfile.filter.PatternFilter;
 import arte.programar.materialfile.ui.FilePickerActivity;
 
-@SuppressWarnings("WeakerAccess")
 public class MaterialFilePicker {
     private Activity mActivity;
 

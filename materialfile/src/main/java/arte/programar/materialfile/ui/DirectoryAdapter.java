@@ -30,8 +30,7 @@ class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.DirectoryVi
 
     @NonNull
     @Override
-    public DirectoryViewHolder onCreateViewHolder(ViewGroup parent,
-                                                  int viewType) {
+    public DirectoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_file, parent, false);
 
@@ -59,15 +58,15 @@ class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.DirectoryVi
 
     static class DirectoryViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView mFileImage;
-        private TextView mFileTitle;
-        private TextView mFileSubtitle;
+        private final ImageView mFileImage;
+        private final TextView mFileTitle;
+        private final TextView mFileSubtitle;
 
         DirectoryViewHolder(View itemView, final OnItemClickListener clickListener) {
             super(itemView);
 
             itemView.setOnClickListener(v -> {
-                clickListener.onItemClick(v, getAdapterPosition());
+                clickListener.onItemClick(v, getBindingAdapterPosition());
             });
 
             mFileImage = itemView.findViewById(R.id.item_file_image);

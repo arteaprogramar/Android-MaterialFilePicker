@@ -12,7 +12,7 @@ import arte.programar.materialfile.R;
 
 public class FileTypeUtils {
 
-    private static Map<String, FileType> fileTypeExtensions = new HashMap<>();
+    private static final Map<String, FileType> fileTypeExtensions = new HashMap<>();
 
     static {
         for (FileType fileType : FileType.values()) {

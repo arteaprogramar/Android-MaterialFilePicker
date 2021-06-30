@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 class MainActivity : ActivityPermission() {
 
     private val TAG: String = MainActivity::class.java.simpleName
-    private val pickButton: Button by lazy { findViewById<Button>(R.id.pick_from_activity) }
+    private val pickButton: Button by lazy { findViewById(R.id.pick_from_activity) }
     private val PERMISSION_REQUEST = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
         arrayOf(
                 Manifest.permission.MANAGE_EXTERNAL_STORAGE,
