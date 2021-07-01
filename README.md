@@ -29,7 +29,7 @@ build.gradle (Module: app)
 
 dependencies {
     ...
-    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:v1.6'
+    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:v1.7'
 }
 
 

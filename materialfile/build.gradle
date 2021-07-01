@@ -3,7 +3,7 @@ plugins {
 }
 
 def _group = 'arte.programar'
-def _version = '1.6'
+def _version = '1.7'
 def _artifact = 'materialfile'
 
 task sourceJar(type: Jar) {
@@ -35,4 +35,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0-rc01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
+    implementation "androidx.activity:activity:1.2.3"
+    implementation 'androidx.fragment:fragment:1.3.5'
 }

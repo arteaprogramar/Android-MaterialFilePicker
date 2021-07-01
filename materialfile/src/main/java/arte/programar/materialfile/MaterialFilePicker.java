@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 
+import androidx.activity.result.ActivityResultLauncher;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,10 @@ public class MaterialFilePicker {
 
     private Fragment mFragment;
     private androidx.fragment.app.Fragment mSupportFragment;
+    private ActivityResultLauncher<Intent> mStartForResultFiles;
 
     private Class<? extends FilePickerActivity> mFilePickerClass = FilePickerActivity.class;
 
-    private Integer mRequestCode;
     private Pattern mFileFilter;
     private Boolean mDirectoriesFilter = false;
     private String mRootPath;
@@ -74,16 +76,10 @@ public class MaterialFilePicker {
         return this;
     }
 
-    /**
-     * Specifies request code that used in activity result
-     *
-     * @see <a href="https://developer.android.com/training/basics/intents/result.html">Getting a Result from an Activity</a>
-     */
-    public MaterialFilePicker withRequestCode(int requestCode) {
-        mRequestCode = requestCode;
+    public MaterialFilePicker withActivityResultApi(ActivityResultLauncher<Intent> startForResultFiles) {
+        mStartForResultFiles = startForResultFiles;
         return this;
     }
-
 
     /**
      * Hides files that matched by specified regular expression.
@@ -162,23 +158,15 @@ public class MaterialFilePicker {
      * @see MaterialFilePicker#withSupportFragment(androidx.fragment.app.Fragment)
      */
     public void start() {
-        if (mActivity == null && mFragment == null && mSupportFragment == null) {
-            throw new RuntimeException("You must pass Activity/Fragment by calling withActivity/withFragment/withSupportFragment method");
+        if (mActivity == null && mFragment == null && mSupportFragment == null && mStartForResultFiles == null) {
+            throw new RuntimeException(
+                    "You must pass Activity/Fragment by calling " +
+                            "withActivity/withFragment/withSupportFragment and " +
+                            "withActivityResultApi method"
+            );
         }
 
-        if (mRequestCode == null) {
-            throw new RuntimeException("You must pass request code by calling withRequestCode method");
-        }
-
-        Intent intent = getIntent();
-
-        if (mActivity != null) {
-            mActivity.startActivityForResult(intent, mRequestCode);
-        } else if (mFragment != null) {
-            mFragment.startActivityForResult(intent, mRequestCode);
-        } else {
-            mSupportFragment.startActivityForResult(intent, mRequestCode);
-        }
+        mStartForResultFiles.launch(getIntent());
     }
 
     // Public because of https://github.com/nbsp-team/MaterialFilePicker/issues/113

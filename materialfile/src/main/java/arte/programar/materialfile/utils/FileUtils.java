@@ -56,6 +56,7 @@ public class FileUtils {
     }
 
     public static File getFile(Context context, String path){
+        path = path == null ? "" : path;
         String absolutePath = ContextCompat.getExternalFilesDirs(context, null)[0].getPath();
         if (absolutePath.contains("/Android/data")) {
             int index = absolutePath.indexOf("/Android/data");
