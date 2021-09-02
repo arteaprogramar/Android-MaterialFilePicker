@@ -1,6 +1,7 @@
 package arte.programar.materialfile.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -55,14 +56,16 @@ public class FileUtils {
         return false;
     }
 
-    public static File getFile(Context context, String path){
-        path = path == null ? "" : path;
+    public static File getFile(Context context, String path) {
+        String npath = path == null ? "" : path;
         String absolutePath = ContextCompat.getExternalFilesDirs(context, null)[0].getPath();
         if (absolutePath.contains("/Android/data")) {
             int index = absolutePath.indexOf("/Android/data");
-            String storage = absolutePath.substring(0, index).concat(path.length() > 0 ? FILE_PATH_SEPARATOR : "");
-            absolutePath = String.format(Locale.getDefault(), "%s%s", storage, path);
+            String storage = absolutePath.substring(0, index).concat(npath.length() > 0 ? FILE_PATH_SEPARATOR : "");
+            absolutePath = String.format(Locale.getDefault(), "%s%s", storage, npath);
         }
+
+        Log.d("TAG", absolutePath);
         return new File(absolutePath);
     }
 }

@@ -29,7 +29,9 @@ build.gradle (Module: app)
 
 dependencies {
     ...
-    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:v1.7'
+    implementation 'androidx.activity:activity-ktx:1.3.1'
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
+    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:2.0.1'
 }
 
 
@@ -40,10 +42,20 @@ dependencies {
 - Add to Values
 
 ```
-colors.xml
+colors.xml 
 <resources>
     ...
     <color name="colorBackground">#fafafa</color>
+    
+    <!-- Android API 31 Required -->
+    <color name="colorBackground">#fafafa</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="colorControlHighlight">#4000695C</color>
+    <color name="colorPrimaryDarkVariant">#8a000000</color>
+    <color name="colorPrimaryDark">#FFFFFFFF</color>
+    <color name="colorAccent">#1A237E</color>
+    <color name="colorPrimary">#FFFFFFFF</color>
+    
     ...
 </resources>
 
@@ -62,46 +74,74 @@ styles.xml
 
 ```
 ...
-public static final int FILE_PICKER_REQUEST_CODE = 989
+kotlin 
+
+/** 
+ *  This library require "Activity Result" API 
+ **/
+
+private val startForResultFiles = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+) { result: ActivityResult ->
+    onActivityResult(result.resultCode, result.data)
+} 
+ 
 ...
 
+// External Storage Path
+val externalStorage = FileUtils.getFile(applicationContext, null)
+
 MaterialFilePicker()
-    // Pass a source of context. Can be:
-    //    .withActivity(Activity activity)
-    //    .withFragment(Fragment fragment)
-    //    .withSupportFragment(androidx.fragment.app.Fragment fragment)
-    .withActivity(this)
-    // With cross icon on the right side of toolbar for closing picker straight away
-    .withCloseMenu(true)
-    // Entry point path (user will start from it)
-    .withPath(alarmsFolder.absolutePath)
-    // Root path (user won't be able to come higher than it)
-    .withRootPath(externalStorage.absolutePath)
-    // Showing hidden files
-    .withHiddenFiles(true)
-    // Want to choose only jpg images
-    .withFilter(Pattern.compile(".*\\.(jpg|jpeg)$"))
-    // Don't apply filter to directories names
-    .withFilterDirectories(false)
-    .withTitle("Sample title")
-    .withRequestCode(FILE_PICKER_REQUEST_CODE)
-    .start()
+        // Pass a source of context. Can be:
+        //    .withActivity(Activity activity)
+        //    .withFragment(Fragment fragment)
+        //    .withSupportFragment(androidx.fragment.app.Fragment fragment)
+        .withActivity(this)
+        // With cross icon on the right side of toolbar for closing picker straight away
+        .withCloseMenu(true)
+        // Entry point path (user will start from it)
+        //.withPath(alarmsFolder.absolutePath)
+        // Root path (user won't be able to come higher than it)
+        .withRootPath(externalStorage.absolutePath)
+        // Showing hidden files
+        .withHiddenFiles(true)
+        // Want to choose only jpg images
+        .withFilter(Pattern.compile(".*\\.(jpg|jpeg)$"))
+        // Don't apply filter to directories names
+        .withFilterDirectories(false)
+        .withTitle("Sample title")
+        // Require "Activity Result" API
+        .withActivityResultApi(startForResultFiles)
+        .start()
 ...
+
+
+/** 
+ *  For Android API 29+, You need 
+ *  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> 
+ * And some extra settings.
+ * You can check the demo of the application
+ **/
+
 
 ```
 
 Override on activity result:
 
-```java
-@Override
-protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+```
+kotlin
 
-    if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-        String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-        // Do anything with file
+private fun onActivityResult(resultCode: Int, data: Intent?) {
+    if (resultCode == Activity.RESULT_OK) {
+        val path: String? = data?.getStringExtra(FilePickerActivity.RESULT_FILE_PATH)
+
+        if (path != null) {
+            Log.d("Path: ", path)
+            Toast.makeText(this, "Picked file: $path", Toast.LENGTH_LONG).show()
+        }
     }
 }
+
 ```
 
 ## Themes

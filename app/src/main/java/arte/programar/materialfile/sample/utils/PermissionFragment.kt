@@ -9,10 +9,10 @@ import android.os.Environment
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 
-abstract class PermissionActivity : AppCompatActivity() {
+abstract class PermissionFragment : Fragment() {
 
     abstract fun onPermissionsGranted()
 
@@ -35,7 +35,7 @@ abstract class PermissionActivity : AppCompatActivity() {
             requestedPermissions.filter { it != Manifest.permission.MANAGE_EXTERNAL_STORAGE }
                 .takeWhile {
                     ContextCompat.checkSelfPermission(
-                        applicationContext,
+                        requireContext(),
                         it
                     ) == PackageManager.PERMISSION_GRANTED
                 }.size
@@ -61,7 +61,7 @@ abstract class PermissionActivity : AppCompatActivity() {
 
         requestedPermissions.map {
             if (ContextCompat.checkSelfPermission(
-                    applicationContext,
+                    requireContext(),
                     it
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
@@ -104,7 +104,7 @@ abstract class PermissionActivity : AppCompatActivity() {
         } else {
             Intent().apply {
                 action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                data = Uri.parse(String.format("package:%s", applicationContext.packageName))
+                data = Uri.parse(String.format("package:%s", requireContext().packageName))
                 startActivityForResult.launch(this)
             }
         }
@@ -115,7 +115,7 @@ abstract class PermissionActivity : AppCompatActivity() {
         try {
             Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION).apply {
                 addCategory(Intent.CATEGORY_DEFAULT)
-                data = Uri.parse(String.format("package:%s", applicationContext.packageName))
+                data = Uri.parse(String.format("package:%s", requireContext().packageName))
                 startActivityForResult.launch(this)
             }
         } catch (ex: Exception) {

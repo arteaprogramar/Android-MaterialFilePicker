@@ -156,16 +156,9 @@ public class MaterialFilePicker {
      * @see MaterialFilePicker#withActivity(Activity)
      * @see MaterialFilePicker#withFragment(Fragment)
      * @see MaterialFilePicker#withSupportFragment(androidx.fragment.app.Fragment)
+     * @see MaterialFilePicker#withActivityResultApi(ActivityResultLauncher)
      */
     public void start() {
-        if (mActivity == null && mFragment == null && mSupportFragment == null && mStartForResultFiles == null) {
-            throw new RuntimeException(
-                    "You must pass Activity/Fragment by calling " +
-                            "withActivity/withFragment/withSupportFragment and " +
-                            "withActivityResultApi method"
-            );
-        }
-
         mStartForResultFiles.launch(getIntent());
     }
 
@@ -173,22 +166,14 @@ public class MaterialFilePicker {
     public Intent getIntent() {
         CompositeFilter filter = getFilter();
 
-        Activity activity = null;
-        if (mActivity != null) {
-            activity = mActivity;
-        } else if (mFragment != null) {
-            activity = mFragment.getActivity();
-        } else if (mSupportFragment != null) {
-            activity = mSupportFragment.getActivity();
-        }
-
-        Intent intent = new Intent(activity, mFilePickerClass);
+        Intent intent = new Intent(getActivity(), mFilePickerClass);
         intent.putExtra(FilePickerActivity.ARG_FILTER, filter);
         intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
 
         if (mRootPath != null) {
             intent.putExtra(FilePickerActivity.ARG_START_FILE, new File(mRootPath));
         }
+
         if (mCurrentPath != null) {
             intent.putExtra(FilePickerActivity.ARG_CURRENT_FILE, new File(mCurrentPath));
         }
@@ -198,6 +183,28 @@ public class MaterialFilePicker {
         }
 
         return intent;
+    }
+
+    private Activity getActivity() {
+        Activity activity = null;
+
+        if (mActivity == null && mFragment == null && mSupportFragment == null && mStartForResultFiles == null) {
+            throw new RuntimeException(
+                    "You must pass Activity/Fragment by calling " +
+                            "withActivity/withFragment/withSupportFragment and " +
+                            "withActivityResultApi method"
+            );
+        }
+
+        if (mActivity != null) {
+            activity = mActivity;
+        } else if (mFragment != null) {
+            activity = mFragment.getActivity();
+        } else if (mSupportFragment != null) {
+            activity = mSupportFragment.getActivity();
+        }
+
+        return activity;
     }
 
     private CompositeFilter getFilter() {

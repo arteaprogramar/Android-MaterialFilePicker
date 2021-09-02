@@ -2,25 +2,25 @@ package arte.programar.materialfile.sample
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import arte.programar.materialfile.MaterialFilePicker
 import arte.programar.materialfile.sample.utils.Constants
-import arte.programar.materialfile.sample.utils.PermissionActivity
+import arte.programar.materialfile.sample.utils.PermissionFragment
 import arte.programar.materialfile.ui.FilePickerActivity
 import arte.programar.materialfile.utils.FileUtils
 import java.util.regex.Pattern
 
-class MainActivity : PermissionActivity() {
+class SampleFragment : PermissionFragment() {
 
     private val TAG: String = MainActivity::class.java.simpleName
-
-    private val pickButton: Button by lazy { findViewById(R.id.pick_from_activity) }
 
     private val startForResultFiles = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -28,36 +28,30 @@ class MainActivity : PermissionActivity() {
         onActivityResult(result.resultCode, result.data)
     }
 
-    private val startForResultDocumentTree = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        Log.d(TAG, result.data.toString())
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_sample, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        val pickButton = view.findViewById<Button>(R.id.pick_from_fragment)
         pickButton.setOnClickListener {
             requestAppPermissions(Constants.PERMISSION_REQUEST)
         }
+
+        return view
     }
 
     private fun openFilePicker() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startForResultDocumentTree.launch(intent)
-        }
-
-        val externalStorage = FileUtils.getFile(applicationContext, null)
+        val externalStorage = FileUtils.getFile(requireContext(), "Download")
 
         MaterialFilePicker()
             // Pass a source of context. Can be:
             //    .withActivity(Activity activity)
             //    .withFragment(Fragment fragment)
             //    .withSupportFragment(androidx.fragment.app.Fragment fragment)
-            .withActivity(this)
+            .withSupportFragment(this)
             // With cross icon on the right side of toolbar for closing picker straight away
             .withCloseMenu(true)
             // Entry point path (user will start from it)
@@ -89,8 +83,9 @@ class MainActivity : PermissionActivity() {
 
             if (path != null) {
                 Log.d("Path: ", path)
-                Toast.makeText(this, "Picked file: $path", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Picked file: $path", Toast.LENGTH_LONG).show()
             }
         }
     }
+
 }

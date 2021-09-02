@@ -36,6 +36,12 @@
             android:text="@string/pick_from_activity"
             android:theme="@style/ButtonStyle" />
 
+        <fragment
+            android:id="@+id/sample_fragment"
+            class="arte.programar.materialfile.sample.SampleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </LinearLayout>

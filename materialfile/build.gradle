@@ -1,10 +1,25 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 def _group = 'arte.programar'
-def _version = '1.7'
+def _version = '2.0.1'
+def _versioncode = 16
 def _artifact = 'materialfile'
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = _group
+                artifactId = _artifact
+                version = _version
+            }
+        }
+    }
+}
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -12,11 +27,11 @@ task sourceJar(type: Jar) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 15
+        targetSdkVersion 31
+        versionCode _versioncode
         versionName _version
     }
     buildTypes {
@@ -33,8 +48,8 @@ android {
 
 dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.google.android.material:material:1.4.0-rc01'
+    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
-    implementation "androidx.activity:activity:1.2.3"
-    implementation 'androidx.fragment:fragment:1.3.5'
+    implementation 'androidx.activity:activity:1.3.1'
+    implementation 'androidx.fragment:fragment:1.3.6'
 }
