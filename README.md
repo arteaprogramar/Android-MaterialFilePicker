@@ -7,7 +7,6 @@ Material file picker library for Android by Arte al Programar
 ## What's new
 
 - Require Android Jelly Bean 4.1.x (API 16+)
-- Android 11 Compatibility with permission all files (android.permission.MANAGE_EXTERNAL_STORAGE)
 - Material Components for Android Support
 - Night Mode Support
 - New Icon Designs
@@ -39,6 +38,9 @@ dependencies {
 ```
 
 ## Using (IMPORTANT)
+
+Android 11 and higher, you must ask permission "MANAGE_EXTERNAL_STORAGE" as applied to "Material
+File Picker" to access user files.
 
 - Add to Values
 
