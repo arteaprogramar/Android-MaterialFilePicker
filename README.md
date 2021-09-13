@@ -39,9 +39,8 @@ dependencies {
 
 ## Using (IMPORTANT)
 
-Android 11 and higher, you must ask permission "MANAGE_EXTERNAL_STORAGE" as applied to "Material
-File Picker" to access user files.
-
+- For Android 11 and above, you must request "MANAGE_EXTERNAL_STORAGE" permission in your
+  application, "Material File Picker" requires that permission to read and show user files.
 - Add to Values
 
 ```
