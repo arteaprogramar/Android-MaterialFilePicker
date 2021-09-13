@@ -4,8 +4,8 @@ plugins {
 }
 
 def _group = 'arte.programar'
-def _version = '2.0.1'
-def _versioncode = 16
+def _version = '2.1.0'
+def _versioncode = 17
 def _artifact = 'materialfile'
 
 afterEvaluate {
@@ -41,8 +41,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 

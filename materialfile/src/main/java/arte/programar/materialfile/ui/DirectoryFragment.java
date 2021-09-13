@@ -18,8 +18,6 @@ import arte.programar.materialfile.filter.FileFilter;
 import arte.programar.materialfile.utils.FileUtils;
 import arte.programar.materialfile.widget.EmptyRecyclerView;
 
-import static java.util.Objects.requireNonNull;
-
 public class DirectoryFragment extends Fragment {
 
     private static final String ARG_FILE = "arg_file_path";
@@ -96,7 +94,7 @@ public class DirectoryFragment extends Fragment {
     }
 
     private void initArgs() {
-        final Bundle arguments = requireNonNull(getArguments());
+        final Bundle arguments = requireArguments();
 
         if (arguments.containsKey(ARG_FILE)) {
             mFile = (File) getArguments().getSerializable(ARG_FILE);

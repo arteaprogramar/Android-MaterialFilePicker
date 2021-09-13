@@ -1,15 +1,16 @@
 # Material File Picker Unofficial
+
 Material file picker library for Android by Arte al Programar
 
 ![](ss/main.png)
 
 ## What's new
+
 - Require Android Jelly Bean 4.1.x (API 16+)
 - Android 11 Compatibility with permission all files (android.permission.MANAGE_EXTERNAL_STORAGE)
 - Material Components for Android Support
 - Night Mode Support
-- New Icon Designs 
-
+- New Icon Designs
 
 ## Add your project
 
@@ -31,7 +32,7 @@ dependencies {
     ...
     implementation 'androidx.activity:activity-ktx:1.3.1'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
-    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:2.0.1'
+    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:2.1.0'
 }
 
 
