@@ -5,13 +5,13 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <!-- Status Bar Icons Light Active -->
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!-- NavigationBarColor -->
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <!-- NavigationBar Icons Light Active -->
-        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <!-- Flag indicating whether this Window is responsible for drawing the background -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

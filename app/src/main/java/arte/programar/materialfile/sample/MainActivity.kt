@@ -47,7 +47,7 @@ class MainActivity : PermissionActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startForResultDocumentTree.launch(intent)
+            //startForResultDocumentTree.launch(intent)
         }
 
         val externalStorage = FileUtils.getFile(applicationContext, null)

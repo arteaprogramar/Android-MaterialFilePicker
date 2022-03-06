@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.color.DynamicColors;
+
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -53,6 +55,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DynamicColors.applyIfAvailable(this);
         setContentView(R.layout.activity_file_picker);
 
         if (mStart == null) {

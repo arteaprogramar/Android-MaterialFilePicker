@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pick_from_activity"
-            android:theme="@style/ButtonStyle" />
+            style="@style/Widget.Material3.Button.TonalButton.Icon" />
 
         <fragment
             android:id="@+id/sample_fragment"
