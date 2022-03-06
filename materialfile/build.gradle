@@ -4,8 +4,8 @@ plugins {
 }
 
 def _group = 'arte.programar'
-def _version = '3.0.0'
-def _versioncode = 18
+def _version = '3.0.1'
+def _versioncode = 19
 def _artifact = 'materialfile'
 
 afterEvaluate {

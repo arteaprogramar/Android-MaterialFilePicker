@@ -36,7 +36,7 @@ dependencies {
     // Kotlin
     implementation 'androidx.activity:activity-ktx:1.4.0'
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
-    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:3.0.0'
+    implementation 'com.github.arteaprogramar:Android-MaterialFilePicker:3.0.1'
 }
 
 
